@@ -1,0 +1,65 @@
+</html>
+<!DOCTYPE html>
+<head>
+	<style>
+		body {
+			background-color: black
+		}
+		#table_one {
+			margin-left: auto;
+			margin-right: auto;
+			color: white;
+
+		}
+		h1 {
+			text-align: center;
+			color: red;
+		}
+	</style>
+	<title>website one bitch</title>
+	<script>
+		function myfunc(){
+			var counter = 0;
+			var rowCounter = 0;
+			var cellNumber =  counter + 1;
+			var rowNumber = rowCounter + 1;
+			var tableNumber = cellNumber + rowNumber;
+			
+			while (rowCounter <= 2){
+				if(document.getElementById("table_one")){
+					if (counter == 0){
+						var row = document.getElementById("table_one").insertRow(rowCounter)
+		 				row.id ="newRow" + rowCounter;
+						var cell = row.insertCell(counter);
+						cell.innerHTML = "cell " + cellNumber;
+					}
+					else{
+						var row = document.getElementById("newRow" + rowCounter);
+						var cell = row.insertCell(counter);
+						var cellNumber =  counter + 1;
+						cell.innerHTML = "cell " + cellNumber;
+					}
+					if(counter >= 2 ){
+						counter = 0;
+						var table = document.getElementById("table_one");
+						var newRow = table.insertRow(rowCounter);
+						newRow.id = "newRow" + rowCounter;
+						rowCounter++;	
+					}
+					else
+						counter++;
+				}
+			}	
+			return;
+		}	
+	</script>
+</head>
+<body>
+<h1>This is My shitty website whats up bitch</h1>
+<table id="table_one" border="1">
+</table>
+<script>
+		document.onload = myfunc();
+</script>
+</body>
+</html>
