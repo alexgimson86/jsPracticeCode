@@ -18,40 +18,82 @@
 	</style>
 	<title>website one bitch</title>
 	<script>
-		function myfunc(){
+		var masterFunc = (function myfunc(){
+			var intervalCounter = -1;
 			var counter = 0;
 			var rowCounter = 0;
 			var cellNumber =  counter + 1;
 			var rowNumber = rowCounter + 1;
 			var tableNumber = cellNumber + rowNumber;
-			
-			while (rowCounter <= 2){
-				if(document.getElementById("table_one")){
-					if (counter == 0){
-						var row = document.getElementById("table_one").insertRow(rowCounter)
-		 				row.id ="newRow" + rowCounter;
-						var cell = row.insertCell(counter);
-						cell.innerHTML = "cell " + cellNumber;
-					}
-					else{
-						var row = document.getElementById("newRow" + rowCounter);
-						var cell = row.insertCell(counter);
-						var cellNumber =  counter + 1;
-						cell.innerHTML = "cell " + cellNumber;
-					}
-					if(counter >= 2 ){
-						counter = 0;
-						var table = document.getElementById("table_one");
-						var newRow = table.insertRow(rowCounter);
-						newRow.id = "newRow" + rowCounter;
-						rowCounter++;	
-					}
-					else
+
+			var buildTable = function(){
+
+				while (rowCounter <= 2){
+					if(document.getElementById("table_one")){
+						if (counter == 0){
+							var row = document.getElementById("table_one").insertRow(rowCounter)
+			 				row.id ="newRow" + rowCounter;
+							var cell = row.insertCell(counter);
+							cell.innerHTML = "cell " + cellNumber;
+						}
+						else if(counter == 1){
+							var row = document.getElementById("newRow" + rowCounter);
+							var cell = row.insertCell(counter);
+							var cellNumber =  counter + 1;
+							cell.innerHTML = "cell " + cellNumber;
+						}
+						else
+						{
+							counter = 0;
+							var table = document.getElementById("table_one");
+							var newRow = table.insertRow(rowCounter);
+							newRow.id = "newRow" + rowCounter;
+							rowCounter++;	
+						}
 						counter++;
+					}
 				}
+
 			}	
-			return;
-		}	
+			var moveTable = function(intervalCounter){
+				if (intervalCounter % 5 == 0){
+					var tableObj = document.getElementById("table_one");
+					tableObj.style['margin-right'] = 'auto';
+					tableObj.style['margin-left'] = '0px';
+				}
+				else if(intervalCounter % 5 == 1){
+					var tableObj = document.getElementById("table_one");
+					tableObj.style['margin-left'] = 'auto';
+					tableObj.style['margin-right'] = '0px';
+				}
+				else if (intervalCounter % 5 == 2){
+					var tableObj = document.getElementById("table_one");
+					tableObj.style['margin-bottom'] = '0px';
+					tableObj.style['margin-top'] = 'auto';
+					tableObj.style['margin-right'] = 'auto';
+					tableObj.style['margin-left'] = 'auto';
+
+				}				
+				else if(intervalCounter % 5 == 3){
+					var tableObj = document.getElementById("table_one");
+					tableObj.style['margin-top'] = '0px';
+					tableObj.style['margin-bottom'] = 'auto';
+
+				}				
+					
+				else {
+					var tableObj = document.getElementById("table_one");
+					tableObj.style['margin-top'] = 'auto';
+					tableObj.style['margin-bottom'] = '0px';
+
+				}
+			}
+			intervalCounter += 1;				
+			return { 
+				moveTable: moveTable,
+				buildTable: buildTable
+			}
+		}());
 	</script>
 </head>
 <body>
@@ -59,7 +101,10 @@
 <table id="table_one" border="1">
 </table>
 <script>
-		document.onload = myfunc();
+		masterFunc.buildTable();
+		var changeLocation = setInterval( function(){
+			masterFunc.moveTable();
+		},10000);
 </script>
 </body>
-</html>
+omas]</html>
